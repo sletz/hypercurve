@@ -1,6 +1,5 @@
 # Hypercurve documentation
 
-  
 ![Hybrid Hypercurve](png/hybrid.png)
 
 Hypercurve is a library of 2D curves designed to process audio envelopes, applied to any audio parameter.
@@ -43,10 +42,7 @@ It is available in several frontends : C++, Lua, and Csound.
 
 ## Hypercurve basic syntax
 
-
 Here is a simple example of syntax with possible use cases :
-
-  
 
 C++ :
 
@@ -61,13 +57,12 @@ hypercurve::segment(0.5, 0, hypercurve::share(hypercurve::diocles_curve(1)))
 
 });
 
-  // Get samples values like below
+// Get samples values like below
 
 double sample = crv.get_sample_at(1024);
 
 double *samples = crv.get_samples();
 
-  
 // Write the curve as PNG file
 
 hypercurve::png png;
@@ -85,10 +80,7 @@ png.write_png("my/path/to.png");
 SndfileHandle sf(path , SFM_WRITE, SF_FORMAT_WAV | SF_FORMAT_PCM_24, 1, 48000);
 
 sf.writef(crv.get_samples(), crv.get_definition());
-
 ```
-
-  
 
 Lua :
 
@@ -101,8 +93,6 @@ hc.segment(0.5, 1, hc.cubic_curve())
 hc.segment(0.5, 0, hc.cissoid_curve(1))
 
 })
-
-  
 
 crv:ascii_display("MyHybridCurve", "half cubic, half cissoid", "*")
 
@@ -118,7 +108,6 @@ crv:write_as_png("path_to/curve.png", is_waveform, fill, draw_grid, invert_color
 
 crv:write_as_wav( "path/curve.wav" )
   
-
 -- rescale the curve
 
 crv:scale(-1, 1)
@@ -126,11 +115,7 @@ crv:scale(-1, 1)
 local  samp = crv:get_sample_at(1024)
 
 local  samps = crv:get_samples()
-
 ```
-
-  
-
 Csound :
 
 ```Csound
@@ -158,7 +143,6 @@ kenv = tablei:k(linseg(0, p3, 1), gidiocles, 1)
 
 ```
 
-  
 Faust : 
 ```
 curve = hc.hypercurve(2048, 0, (
@@ -170,17 +154,12 @@ env = hc.run(curve, os.phasor(1, 1));
 
 ```
   
-
 ## Import hypercurve
-
-  
 
 C++ :
 
 ```c++
-
 #include"hypercurve.h"
-
 ```
 
 Lua :
@@ -192,7 +171,6 @@ Lua :
 package.cpath = package.cpath .. ";/your/path/to/hypercurve/?.so"
 
 local  hc = require("liblua_hypercurve")
-
 ```
 
 Csound :
@@ -206,7 +184,6 @@ In csound you can manually import the library like below, or simply put the libr
 --opcode-lib=/your/path/to/libcsound_hypercurve.so
 
 </CsOptions>
-
 ```
 
 Faust : 
@@ -214,10 +191,8 @@ Faust :
 hc = library("hypercurve.lib");
 ```
   
-
 ## Hypercurve class
 
- 
 C++ :
 
 ```c++
@@ -229,13 +204,11 @@ auto crv = hypercurve::curve(size_t size_in_samples, double y_start, std::vector
 auto crv = hypercurve::curve(size_t size_in_samples, double y_start, std::vector<hypercurve::segment> segment_list);
 
 ```
-
 Lua :
 
 ```Lua
 
 local  crv = hc.hypercurve(integer  size_in_samples, number  y_start, table {segments})
-
 ```
 
 Csound :
@@ -243,7 +216,6 @@ Csound :
 ```Csound
 
 icrv = hc_hypercurve(int isize_in_samples, float iy_start, isegment1 , [isegment2, isegment3...])
-
 ```
 
 Faust : 
@@ -260,7 +232,6 @@ C++ :
 ```c++
 
 auto seg = hypercurve::segment(double fractional_size, double y_destination, std::shared_ptr<curve_base> curve_type);
-
 ```
 
 Lua :
@@ -268,7 +239,6 @@ Lua :
 ```Lua
 
 local  seg = hc.segment(number  fractional_size, number  y_destination, curve_base)
-
 ```
 
 Csound :
@@ -276,7 +246,6 @@ Csound :
 ```Csound
 
 iseg = hc_segment(float fractional_size, float y_destination, curve_base icrv_base)
-
 ```
 
 Faust : 
@@ -298,7 +267,6 @@ hypercurve::control_point(0.5, 0.8);
 hypercurve::point(0.5, 0.8);
 // Can also be passed with {}
 hypercurve::quadratic_bezier_curve({0.5, 0.8});
-
 ```
 
 Lua :
@@ -308,7 +276,6 @@ Lua :
 hc.control_point(0.5, 0.8)
 -- Alias
 hc.point(0.5, 0.8)
-
 ```
 
 Csound :
@@ -318,7 +285,6 @@ Csound :
 hc_control_point(0.5, 0.8)
 // Alias
 hc_point(0.5, 0.8)
-
 ```
 
 Faust : 
@@ -326,14 +292,11 @@ Faust :
 hc.control_point(0.5, 0.7);
 hc.point(0.3, 0.8);
 ```
-  
 
 C++ :
 
 ```c++
-
 hypercurve::share( )
-
 ```
 
 Lua :
@@ -341,7 +304,6 @@ Lua :
 ```Lua
 
 hc.
-
 ```
 
 Csound :
@@ -349,7 +311,6 @@ Csound :
 ```Csound
 
 hc_
-
 ```
 
 Faust : 
@@ -357,17 +318,12 @@ Faust :
 hc.
 ```
 
-
 ## Curve Base
-
-  
 
 In Hypercurve, a Curve base represents the algorithm of a specific curve. Some of them take one or several constant parameters.
 You should remember algorithms implementations are most of the time approximations of the curve equations. 
 Indeed, many curve equations are not easy to scale and normalize, since their behavior tends to infinity.
 So in many cases (e.g. hamming, gaussian...) I had to find a logical rule to force the curves to respect Hypercurve composition rules (normalizable, scalable). 
-
-  
 
 #### Diocles cissoid curve
 
@@ -384,7 +340,6 @@ hypercurve::share( hypercurve::diocles_curve(double a) );
 // Alias
 
 hypercurve::share( hypercurve::cissoid_curve(double a) );
-
 ```
 
 Lua :
@@ -396,7 +351,6 @@ hc.diocles_curve(number  a)
 -- Alias
 
 hc.cissoid_curve(a)
-
 ```
 
 Csound :
@@ -408,7 +362,6 @@ hc_diocles(float iarg_a)
 // Alias
 
 hc_cissoid(float iarg_a)
-
 ```
 
 Faust : 
@@ -418,13 +371,10 @@ hc.diocles_curve(float a);
 // Alias
 
 hc.cissoid(float a);
-
 ```
-  
 
 #### Cubic curve
 
-  
 ![Cubic curve](png/cubic.png)
 
 C++ :
@@ -432,7 +382,6 @@ C++ :
 ```c++
 
 hypercurve::share( hypercurve::cubic_curve() );
-
 ```
 
 Lua :
@@ -440,7 +389,6 @@ Lua :
 ```Lua
 
 hc.cubic_curve()
-
 ```
 
 Csound :
@@ -448,20 +396,14 @@ Csound :
 ```Csound
 
 hc_cubic_curve()
-
 ```
 
-  
 Faust : 
 ```
 hc.cubic_curve;
-
 ```
 
-
-
 #### Power curve
-
   
 ![Power curve](png/power9.png)
 
@@ -473,36 +415,26 @@ C++ :
 ```c++
 
 hypercurve::share( hypercurve::power_curve(double power) );
-
 ```
-
 Lua :
 
 ```Lua
 
 hc.power_curve(number  power)
-
 ```
-
 Csound :
 
 ```Csound
 
 hc_power_curve(float ipower)
-
 ```
-
 
 Faust : 
 ```
 hc.power_curve(float exponent);
-
 ```
 
-
-
 #### Hamming Hanning Blackman curves
-
   
 * Hanning 
 ![Hanning curve](png/hanning.png)
@@ -522,7 +454,6 @@ hypercurve::share( hypercurve::hamming_curve() );
 hypercurve::share( hypercurve::hanning_curve() );
 
 hypercurve::share( hypercurve::blackman_curve() );
-
 ```
 
 Lua :
@@ -534,7 +465,6 @@ hc.hamming_curve()
 hc.hanning_curve()
 
 hc.blackman_curve()
-
 ```
 
 Csound :
@@ -546,9 +476,7 @@ hc_hamming_curve()
 hc_hanning_curve()
 
 hc_blackman_curve()
-
 ```
-
 
 Faust : 
 ```
@@ -572,9 +500,6 @@ hypercurve::share( hypercurve::gaussian_curve(double A, double c) );
 // Alias
 
 hypercurve::share( hypercurve::gauss_curve(double A, double c) );
-
-  
-
 ```
 
 Lua :
@@ -586,7 +511,6 @@ hc.gaussian_curve(number  A, number  c)
 -- Alias
 
 hc.gauss_curve(number  A, number  c)
-
 ```
 
 Csound :
@@ -598,7 +522,6 @@ hc_gaussian_curve(float iA, float ic)
 // Alias
 
 hc_gauss_curve(float iA, float ic)
-
 ```
 
 Faust : 
@@ -608,7 +531,6 @@ hc.gaussian_curve(float A, float c);
 // Alias
 
 hc.gauss_curve(float A, float c);
-
 ```
 
 #### Toxoid curve
@@ -628,9 +550,7 @@ hypercurve::share( hypercurve::toxoid_curve(double a) );
 hypercurve::share( hypercurve::duplicatrix_cubic_curve(double a) );
 
 ```
-
 Lua :
-
 ```Lua
 
 hc.toxoid_curve(number  a)
@@ -640,9 +560,7 @@ hc.toxoid_curve(number  a)
 hc.duplicatrix_cubic_curve(number  a)
 
 ```
-
 Csound :
-
 ```Csound
 
 hc_toxoid_curve(float ia)
@@ -660,10 +578,8 @@ hc.toxoid_curve(float a);
 // Alias
 
 hc.duplicatrix_cubic_curve(float a);
-
 ```
   
-
 #### Catenary curve
 
 ![Catenary curve](png/catenary.png)
@@ -679,7 +595,6 @@ hypercurve::share( hypercurve::catenary_curve(double a) );
 // Alias
 
 hypercurve::share( hypercurve::funicular_curve(double a) );
-
 ```
 
 Lua :
@@ -691,7 +606,6 @@ hc.catenary_curve(number  a)
 -- Alias
 
 hc.funicular_curve(number  a)
-
 ```
 
 Csound :
@@ -703,7 +617,6 @@ hc_catenary_curve(float ia)
 // Alias
 
 hc_funicular_curve(float ia)
-
 ```
 
 Faust : 
@@ -712,44 +625,32 @@ hc.catenary_curve(float a);
 hc.funicular_curve(float a);
 ```
   
-  
-  
-
 #### Tightrope Walker curve
-
   
 ![Tightrope Walker curve](png/tightrope.png)
 
 In this particular case, `a` must be superior to `abs(b)` and `a` must be superior to `0` (quite logical here). 
 Here, it is the distance between `a` and `abs(b)` that will is interesting. A big distance (e.g. a = 1.0, b = 0.1) will create a hardcore concave curve (useful for quick attack envelopes). But a smaller distance (a = 1.01, b = 1) will create a big bump before the attack segment. 
 
-
 C++ :
 
 ```c++
 
 hypercurve::share( hypercurve::tightrope_walker_curve(double a, double b) );
-
 ```
 
 Lua :
 
 ```Lua
-
 hc.tightrope_walker_curve(number  a, number  b)
-
 ```
 
 Csound :
 
 ```Csound
-
 hc_tightrope_walker_curve(float ia, float ib)
 
 ```
-
-  
-  
 
 #### Quadratic Bezier curve
 
@@ -760,34 +661,27 @@ Quadratic bezier curve must be passed a control point. This point will shape the
 C++ :
 
 ```c++
-
 hypercurve::share( hypercurve::quadratic_bezier_curve( hypercurve::control_point cp ) );
-
 ```
 
 Lua :
 
 ```Lua
-
 hc.quadratic_bezier_curve( hc.control_point  cp )
-
 ```
 
 Csound :
 
 ```Csound
-
 hc_quadratic_bezier_curve( hc_control_point cp )
-
 ```
 
 Faust : 
+
 ```
 hc.quadratic_bezier_curve(hc.control_point cp);
-
 ```
   
-
 #### Cubic Bezier curve
 
 ![Cubic bezier curve](png/cubic_bezier.png)
@@ -797,25 +691,19 @@ Same as for quadratic bezier curve, except that you need to specify two control 
 C++ :
 
 ```c++
-
 hypercurve::share( hypercurve::cubic_bezier_curve( hypercurve::control_point cp1, hypercurve::control_point cp2) );
-
 ```
 
 Lua :
-
 ```Lua
 
 hc.cubic_bezier_curve(hc.control_point  cp1, hc.control_point  cp2)
-
 ```
 
 Csound :
 
 ```Csound
-
 hc_cubic_bezier_curve(hc_control_point cp1, hc_control_point cp2)
-
 ```
 
   
@@ -928,18 +816,14 @@ Csound :
 
 ```Csound
 hc_polynomial_curve(1.34, -1, -0.5, 0.1)
-
 ```
-
 
 Faust : 
 ```
 hc.polynomial_curve( (float arguments_list) );
-
 ```
 
 #### User defined curve
-
 
 User defined curve allows you to pass your own function that will return `y` for each `x` between 0 and 1. 
 
@@ -984,7 +868,6 @@ Faust :
 
 #### Typed Curve
 
-
 Typed curve allows you to define a curve factor between -10 and 10 (concave or convex). It is based on Csound [GEN16 formula](http://www.csounds.com/manual/html/GEN16.html). Because of Hypercurve architecture, a increasing segment of typed curve will be inverted (concave instead of convex and convex instead of concave) in comparison to csound GEN16. So type > 0 means convex, type < 0 means concave
 
 ![Typed curve](png/typed.png)
@@ -1016,10 +899,8 @@ Faust :
 hc.typed_curve(9.5);
 
 ```
-
   
 #### Mouse Curve
-
 
 ![Mouth curve](png/mouth.png)
   
@@ -1100,8 +981,6 @@ hc.cocked_hat_curve(bool 0 or 1);
 
 ```
 
-
-
 #### Lagrange polynomial curve
 
 
@@ -1136,7 +1015,6 @@ hc.lagrange_polynomial_curve( (hc.control_point(0.2, 0.8), hc.control_point(0.4,
 ```     
 
 #### Logarithmic and exponential Curve
-
 
 ![Logarithmic curve](png/logarithmic.png)
 ![Exponential curve](png/exponential.png)
@@ -1192,7 +1070,6 @@ hc_ease_out_power_curve(int exponent)
 hc_ease_inout_power_curve(int exponent)
 ```
 
-
 ### Manipulation Tools
 
 #### Hypercurve Operators 
@@ -1200,8 +1077,6 @@ hc_ease_inout_power_curve(int exponent)
 Hypercurves can be combined with + - * / operators
 You are allowed to combine curve and numbers with these operators (for example mycurve * 2). 
 In Csound and Faust, those are implemented as separate functions. 
-
-
 
 C++ :
 
@@ -1248,7 +1123,6 @@ Csound :
   // ... 
 ```
 
-
 Faust : 
 ```
 crv1 = hc.hypercurve(2048, 0, (hc.segment(1, 1, hc.cubic_curve)));
@@ -1261,9 +1135,7 @@ crv_div = hc.div(crv1, crv2);
 
 ```
 
-
-
-#### Invert curve base 
+#### Invert curve base 
 
 Vertical symetry of the curve base.
 
@@ -1296,8 +1168,6 @@ Faust :
 ```
 hc.invert(hc.cubic_curve());
 ```
-
-
 
 #### Mirror curve base
 
@@ -1332,10 +1202,7 @@ Faust :
 hc.mirror(hc.cubic_curve());
 ```
 
-
-
-
-#### Scale hypercurve
+#### Scale hypercurve
 
 This functions will allow you to scale or normalize an hypercurve between min and max y values
 The scale function allows you to rescale an entire HYPERCURVE, while normalize or norm will scale between 0 and 1. 
@@ -1372,7 +1239,6 @@ Csound :
   hc_norm(icrv)
 ``` 
 
-
 Faust : 
 ```
 crv = hc.hypercurve(2048, 0, (hc.segment(1, 1, hc.cubic_curve())))
@@ -1380,7 +1246,6 @@ hc.scale(crv, -1, 1);
 hc.normalize(crv);
 hc.norm(crv);
 ```
-
 
 ### Concatenate hypercurves
 
@@ -1417,12 +1282,9 @@ Faust :
 // Not implemented yet
 ```
 
-
-
 ### Utilities
 
-
-#### Export as PNG 
+#### Export as PNG 
   
 C++ :
 
