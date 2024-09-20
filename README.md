@@ -16,7 +16,6 @@ The above hypercurve is a combination of 1/8 diocles curve, 1/8 toxoid curve, 2/
 
 ## Implemented curve algorithms
 
-
 - Cissoid (Diocles curve) 
 - Cubic 
 - Power curve (choose your power of x)
@@ -34,10 +33,9 @@ The above hypercurve is a combination of 1/8 diocles curve, 1/8 toxoid curve, 2/
 - Typed curves : inspired from Csounds [GEN16](http://www.csounds.com/manual/html/GEN16.html)
 - User defined curves - pass it a function (or a lambda in C++), that returns y for any x between 0 and 1. Not implemented in Csound.
 
-## How to install, and make it work 
+## How to install, and make it work 
 
 Go to [Releases](https://github.com/johannphilippe/hypercurve/releases), and download the latest version. 
-
 
 ### Csound install
 
@@ -49,15 +47,14 @@ Usually, the following instructions will work. If Csound is installed in another
 * On MacOS, move `libcsound_hypercurve.dylib` to `/Library/Frameworks/CsoundLib64.framework/Versions/6.0/Resources/Opcodes64`
 * On Linux (debian), move `libcsound_hypercurve.so` to `/usr/local/lib/csound/plugins64/`
 
-### Lua use 
+### Lua use 
 
 On every OS Hypercurve is compiled for, you can write a lua script using Hypercurve in the Hypercurve directory and just use it from the terminal with `./luajit myscript.lua`. Just change `myscript.lua` to the name of your script. 
 On Windows, it should be ̀`./luajit.exe myscript.lua`. 
 
 ## How to use it 
 
-
-There are three ways to use it : in C++, Csound, Faust or in Lua. Cmake will help you build libraries that can be used in those languages. You will find C++ example under hypercurve_test/test.cpp, Csound example under csound_opcode/test.csd, and Lua example under lua_module/test.lua. 
+There are four ways to use it : in C++, Csound, Faust or in Lua. Cmake will help you build libraries that can be used in those languages. You will find C++ example under hypercurve_test/test.cpp, Csound example under csound_opcode/test.csd, and Lua example under lua_module/test.lua. 
 
 The basic syntax stands as follow : 
 * `hypercurve(integer size, double y_start, {segment_list});`
@@ -128,7 +125,6 @@ curve = hc.hypercurve(definition, y_start  (
 env = hc.runi(curve, os.phasor(1, 1));
 ```
 
-
 # Build
 
 First clone the repo with submodules : 
@@ -152,7 +148,6 @@ On some platforms (e.g. Windows) you might need to set the Lua paths with the fo
 cmake .. -DBUILD_LUA_MODULE=TRUE -DLUA_INCLUDE_DIR=/you/dir/include -DLUA_LIBRARIES=/path/to/lua.lib
 ```
 
-
 Windows build for Lua is a bit more complicated, due to the way Windows searches for dynamic libraries. Wheter you provide `LUA_LIBRARIES` yourself or let CMake find it, you will need the `.lib` and `.dll` libraries of Lua to share the same name (except the extension) and the same path (as it is the case in standard Lua distributions). This will allow CMake to copy the Lua `.dll` dynamic library next to `lua_hypercurve` in the bin folder.
 
 In order to build the Faust library, you will need [Quom](https://pypi.org/project/quom/) to be installed in your system. See the Faust [README](faust_lib/README.md)
@@ -162,7 +157,7 @@ The PNG writer [fpng](https://github.com/richgel999/fpng) used for hypercurve ha
 The resulting binaries will all be located in `bin` directory. On Windows, `lua_hypercurve.dll` and `hypercurve.dll` require `sndfile.dll` to be in the same folder. `lua_hypercurve.dll` also requires the Lua `.dll` you linked against (e.g. `lua5.1.dll`). 
 This must be considered when packaging the library to be embedded or used by another application.
 
-# WASM/WASI  port
+## WASM/WASI  port
 
 After hours of tests, I'm struggling with this. I have not much knowledge about web, neither about Web Assembly. 
 I probably need help.
@@ -238,7 +233,7 @@ It also includes source files from several open-source projects :
 * [this work](https://github.com/ai/easings.net)
 
 
-# LICENSE 
+# LICENSE 
 
 The core of HYPERCURVE is licensed wit MIT. 
 Easing curves - located in curve_lib.h - are derived from [this work](https://github.com/ai/easings.net) and thus are licensed as GNU General Public License 3. 
